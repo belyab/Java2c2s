@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class Service {
+public class HttpService {
 
     public String get(String city) throws IOException {
         URL weatherUrl = new URL("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=15a7261430404fc9ce700900c2e4d9ff");
