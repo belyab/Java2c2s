@@ -1,9 +1,6 @@
 package ru.stud.kpfu.baigulova.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Weather {
@@ -17,7 +14,18 @@ public class Weather {
     private String city;
     private String email;
 
+    @OneToOne(mappedBy = "weather", cascade = CascadeType.ALL)
+    private Appeal appeal;
+
     public Weather() {
+    }
+
+    public Appeal getAppeal() {
+        return appeal;
+    }
+
+    public void setAppeal(Appeal appeal) {
+        this.appeal = appeal;
     }
 
     public Integer getId() {

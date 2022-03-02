@@ -7,6 +7,7 @@ import ru.stud.kpfu.baigulova.dto.UserDto;
 import ru.stud.kpfu.baigulova.helper.PasswordHelper;
 import ru.stud.kpfu.baigulova.model.User;
 import ru.stud.kpfu.baigulova.repository.UserRepository;
+import ru.stud.kpfu.baigulova.service.UserService;
 
 import javax.validation.Valid;
 import java.util.stream.Collectors;
@@ -14,26 +15,25 @@ import java.util.stream.Collectors;
 @RestController
 public class UserController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Autowired
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/user")
     public Iterable<UserDto> getAll() {
-        return userRepository.findAll().stream().map(UserDto::fromModel).collect(Collectors.toList());
+        return userService.getAll();
     }
 
     @GetMapping("/user/{id}")
     public UserDto get(@PathVariable Integer id) {
-        return userRepository.findById(id).stream().map(UserDto::fromModel).findFirst().orElse(null);
+        return userService.getById(id);
     }
 
     @PostMapping("/user")
     public UserDto createUser(@Valid @RequestBody CreateUserDto user) {
-        return UserDto.fromModel(userRepository.save(new User(user.getName(), user.getEmail(),
-                PasswordHelper.encrypt(user.getPassword()))));
+        return userService.save(user);
     }
 }

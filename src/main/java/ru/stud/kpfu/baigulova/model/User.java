@@ -2,6 +2,7 @@ package ru.stud.kpfu.baigulova.model;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -11,11 +12,23 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
+
+    @Column(unique = true)
     private String email;
     private String password;
 
+    @OneToMany(cascade = CascadeType.MERGE)
+    private List<Appeal> appeals;
+
     public User() {
 
+    }
+
+    public User(String name, String email, String password, List<Appeal> appeals) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.appeals = appeals;
     }
 
 
@@ -51,9 +64,11 @@ public class User {
         this.password = password;
     }
 
-    public User(String name, String email, String password) {
+    public User(Integer id,String name, String email, String password, List<Appeal> appeals) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
+        this.appeals = appeals;
     }
 }
