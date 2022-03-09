@@ -50,4 +50,8 @@ public class UserDto {
     public static UserDto fromModel(User user) {
         return new UserDto(user.getId(), user.getName(), user.getEmail(), user.getPassword());
     }
+
+    public UserDto() {
+
+    }
 }
