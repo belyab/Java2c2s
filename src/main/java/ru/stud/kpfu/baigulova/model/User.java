@@ -15,8 +15,13 @@ public class User {
     private Integer id;
     private String name;
 
+    @Column(length = 64)
+    private String verificationCode;
+
     @Column(unique = true)
     private String email;
+
+    private boolean enabled;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
@@ -37,14 +42,6 @@ public class User {
 
     }
 
-    public User(String name, String email, String password, List<Appeal> appeals) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.appeals = appeals;
-    }
-
-
     public Set<Role> getRoles() {
         return roles;
     }
@@ -59,6 +56,22 @@ public class User {
 
     public void setAppeals(List<Appeal> appeals) {
         this.appeals = appeals;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
     }
 
     public Integer getId() {
@@ -93,11 +106,20 @@ public class User {
         this.password = password;
     }
 
-    public User(Integer id,String name, String email, String password, List<Appeal> appeals) {
+    public User(String name, String email, String password, List<Appeal> appeals, String verificationCode) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.appeals = appeals;
+        this.verificationCode = verificationCode;
+    }
+
+    public User(Integer id,String name, String email, String password, List<Appeal> appeals, String verificationCode) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.appeals = appeals;
+        this.verificationCode = verificationCode;
     }
 }

@@ -1,6 +1,8 @@
 package ru.stud.kpfu.baigulova.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,11 +55,12 @@ public class WeatherController {
     }
 
     @GetMapping("/weather")
-    public String getWeather(@RequestParam Optional<String> city, @RequestParam String email) throws IOException {
+    public String getWeather(@RequestParam Optional<String> city, Authentication authentication) throws IOException {
 
-        User user = userService.getByEmail(email);
+        try {
+            String email = authentication.getName();
 
-        if (user != null) {
+            User user = userService.getByEmail(email);
             String result = httpService.get(city.orElse("Kazan"));
 
             Map<String, String> params = jsonHelper.parseJson(result);
@@ -70,7 +73,7 @@ public class WeatherController {
             Appeal appeal = new Appeal(dateTime.format(formatter), weather, user);
             appealService.save(appeal);
             return result;
-        } else {
+        } catch (NullPointerException e) {
             return "null";
         }
     }
