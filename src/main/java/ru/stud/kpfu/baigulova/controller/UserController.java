@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.stream.Collectors;
 
-@Controller
+@RestController
 public class UserController {
 
     private final UserService userService;
