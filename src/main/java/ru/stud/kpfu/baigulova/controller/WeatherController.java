@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.stud.kpfu.baigulova.aspect.Loggable;
 import ru.stud.kpfu.baigulova.dto.UserDto;
 import ru.stud.kpfu.baigulova.dto.WeatherDto;
 import ru.stud.kpfu.baigulova.helper.JsonHelper;
@@ -54,6 +55,7 @@ public class WeatherController {
         return weatherService.getWeathersByCity(city);
     }
 
+    @Loggable
     @GetMapping("/weather")
     public String getWeather(@RequestParam Optional<String> city, Authentication authentication) throws IOException {
 
