@@ -1,6 +1,7 @@
 package ru.stud.kpfu.baigulova.aspect;
 
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -22,7 +23,7 @@ public class LoggingAspect {
 
     }
 
-    @Around("logCityRequest()")
+    @After("logCityRequest()")
     public Object logAllMethods(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         Optional<String> city = (Optional<String>) proceedingJoinPoint.getArgs()[0];
 
